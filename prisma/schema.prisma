@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  password     String?
+  avatar       String?
+  googleId     String?        @unique
+  role         Role           @default(USER)
+  messages     Message[]
+  adminMessages AdminMessage[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Message {
+  id          String    @id @default(uuid())
+  content     String
+  edited      Boolean   @default(false)
+  editedAt    DateTime?
+  // Admin tomonidan o'qilganmi
+  readByAdmin Boolean   @default(false)
+  readAt      DateTime?
+  // Admin javobi
+  reply       String?
+  replyAt     DateTime?
+  replyEdited Boolean   @default(false)
+  // User javobni o'qiganmi
+  replyReadAt DateTime?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+}
+
+// Admin tomonidan mustaqil yuborilgan xabarlar
+model AdminMessage {
+  id        String   @id @default(uuid())
+  content   String
+  toUserId  String
+  toUser    User     @relation(fields: [toUserId], references: [id], onDelete: Cascade)
+  readAt    DateTime?  // user o'qigan vaqt
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
