@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node ./dist/index.js",
-    "db:migrate": "npx prisma migrate dev",
-    "db:generate": "npx prisma generate",
+  "build": "npx prisma generate && tsc",  
+  "start": "node ./dist/index.js",
+  "db:migrate": "npx prisma migrate dev",
+  "db:generate": "npx prisma generate",
     "db:studio": "npx prisma studio",
     "db:seed": "npx prisma db seed"
   },
