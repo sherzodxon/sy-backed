@@ -38,16 +38,22 @@ model Message {
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
+
+  @@index([userId, createdAt])
 }
 
 // Admin tomonidan mustaqil yuborilgan xabarlar
 model AdminMessage {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   content   String
+  edited    Boolean   @default(false)
+  editedAt  DateTime?
   toUserId  String
-  toUser    User     @relation(fields: [toUserId], references: [id], onDelete: Cascade)
-  readAt    DateTime?  // user o'qigan vaqt
-  createdAt DateTime @default(now())
+  toUser    User      @relation(fields: [toUserId], references: [id], onDelete: Cascade)
+  readAt    DateTime? // user o'qigan vaqt
+  createdAt DateTime  @default(now())
+
+  @@index([toUserId, createdAt])
 }
 
 enum Role {
