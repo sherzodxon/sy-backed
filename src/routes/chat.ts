@@ -384,11 +384,6 @@ router.delete("/admin/users/:id", authenticate, requireAdmin,
   }
 );
 
-// ── Legacy (eski) reply mexanizmi ──
-// Eslatma: admin paneli hozir mustaqil AdminMessage yozuvlaridan foydalanadi,
-// bu route'lar eski arxitekturadan qolgan va frontendda ishlatilmaydi.
-
-// PATCH /chat/admin/reply/:id — user xabariga javob (message.reply field)
 router.patch("/admin/reply/:id", authenticate, requireAdmin,
   async (req: Request<{ id: string }>, res: Response) => {
     try {
