@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { authenticate, requireAdmin, AuthRequest } from "../middleware/auth";
+import { sendPushToAdmins } from "../lib/push";
 
 const router = Router();
 
@@ -144,7 +145,12 @@ router.post("/messages", authenticate, async (req: AuthRequest, res: Response) =
         userId: req.userId as string,
         readByAdmin: false,
       },
+      include: { user: { select: { name: true } } },
     });
+
+    // Push xabarnoma yuborish javobni kutmaydi — sekinlashsa ham userga javob kechikmaydi
+    const preview = message.content.length > 100 ? `${message.content.slice(0, 100)}…` : message.content;
+    void sendPushToAdmins(message.user.name, preview);
 
     return res.status(201).json({
       id: message.id,

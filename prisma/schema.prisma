@@ -60,3 +60,10 @@ enum Role {
   USER
   ADMIN
 }
+
+// Admin ilovasi (Capacitor) ro'yxatdan o'tkazgan FCM push token'lari
+model PushToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  createdAt DateTime @default(now())
+}

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "npx prisma generate && tsc",
-     "start": "node ./dist/src/index.js",
+    "start": "node ./dist/src/index.js",
     "db:migrate": "npx prisma migrate dev",
     "db:generate": "npx prisma generate",
     "db:studio": "npx prisma studio",
@@ -21,6 +21,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "firebase-admin": "^14.2.0",
     "google-auth-library": "^10.6.2",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",

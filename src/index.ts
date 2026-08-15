@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import chatRoutes from "./routes/chat";
+import pushRoutes from "./routes/push";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get("/api/health", (_req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/admin/push", pushRoutes);
 
 // 404
 app.use((_req, res) => {
